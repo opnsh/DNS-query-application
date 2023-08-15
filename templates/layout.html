@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        {% if title %}
+        <title>DNS APP - {{ title }}</title>
+        {% else %}
+        <title>DNS APP</title>
+        {% endif %}
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}"/>
+        {% block head %}{% endblock %} 
+    </head>
+    <body>
+        <header>{% block header %}{% endblock %}</header>
+        <section>
+            <div id="info" class="zone_info">
+            {% block content %}{% endblock %} 
+            </div>
+        </section>
+        <footer>{% block footer %}{% endblock %}</footer>
+   </body>
+   <div class="bg"></div>
+   <div class="bg bg2"></div>
+   <div class="bg bg3"></div>
+</html>

@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu:wght@300,400,500,600,700,800,900&display=swap');
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+:root
+{
+    --blue: #287bff;
+    --white: #fff;
+    --grey: #f5f5f5;
+    --black1: #222;
+    --black2: #999;
+}
+
+body 
+{
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: var(--blue);
+    padding: 0;
+}
+
+.titre
+{
+    position: relative;
+    font-weight: 500;
+    font-size: 2.5em;
+    color: var(--white);
+    margin-top: 5%;
+    text-align: center;
+}
+
+.zone_info
+{
+    color: var(--blue);
+}
+
+.zone_info .box
+{
+    z-index: 10;
+    position: relative;
+    background: var(--white);
+    padding: 30px;
+    border-radius: 20px;
+    justify-content:space-between;
+    cursor: pointer;
+    box-shadow: 0 25px 25px rgba(0,0,0,0.1);
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 5%;
+    margin-bottom: 20px;
+}
+
+.zone_info .box .text
+{
+    position: relative;
+    font-weight: 500;
+    font-size: 1em;
+    color: var(--blue);
+    margin: 4px;
+}
+
+.btn-primary
+{
+    position: relative;
+    padding: 5px 10px;
+    background: var(--blue);
+    text-decoration: none;
+    color: var(--white);
+    border-radius: 6px
+}
+
+.btn-primary:hover
+{
+    position: relative;
+    padding: 5px 10px;
+    background: var(--white);
+    text-decoration: none;
+    color: var(--blue);
+    border-radius: 6px
+}
+
+.form-control
+{
+    color: var(--blue);
+}
+
+.resultat
+{
+    margin-left: 30%;
+}
+
+.global
+{
+    margin-left: 5%;
+}
+
+.nom
+{
+    margin-left: -5%;
+}
+
+.error
+{
+    color: var(--white) ;
+    text-align: center;
+    top: 200px;
+    position: relative;
+}
+
+html {
+    height:100%;
+}
+
+.bg {
+  animation:slide 3s ease-in-out infinite alternate;
+  background-image: linear-gradient(-60deg, rgb(51, 204, 204) 50%, #09f 50%);
+  bottom:0;
+  left:-50%;
+  opacity:.5;
+  position:fixed;
+  right:-50%;
+  top:0;
+  z-index:-1;
+}
+
+.bg2 {
+  animation-direction:alternate-reverse;
+  animation-duration:4s;
+}
+
+.bg3 {
+  animation-duration:5s;
+}
+
+@keyframes slide {
+  0% {
+    transform:translateX(-25%);
+  }
+  100% {
+    transform:translateX(25%);
+  }
+}
+
+.flash-message {
+    color: red;
+}
+
+@media only screen and (max-width: 650px) {
+    .zone_info .box {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    .resultat {
+        margin-left: 20px;
+    }
+}

@@ -1,0 +1,113 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1 class="titre">Welcome to our Flask application</h1>
+    <form id="dns-form" method="POST" action="{{ url_for('dns_query') }}" class="box">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <div class="text">
+                {{ form.query_type.label }}
+                {{ form.query_type(class="form-control") }}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="text">
+                {{ form.dns_server.label }}
+                {{ form.dns_server(class="form-control") }}
+            </div>
+        </div>
+        {% for error in form.dns_server.errors %}
+            <span class="flash-message">{{ error }}</span>
+        {% endfor %}
+        <div class="form-group">
+            <div class="text">
+                {{ form.fqdn.label }}
+                {{ form.fqdn(class="form-control") }}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="btn" id="submit">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </div>
+        {% if data %}
+        <div class="zone_info">
+            <h2 class="resultat">DNS results :</h2>
+            {% if data.answers %}
+                <ul class="global">
+                    {% for domain, records in data.answers.items() %}
+                        <ul>
+                            {% for record in records %}
+                                <li>
+                                    <strong class="nom">{{ record.rr_name }}</strong> ({{ record.rr_type }})
+                                    <ul>
+                                        <li>Class: {{ record.rr_class }}</li>
+                                        <li>TTL: {{ record.rr_ttl }}</li>
+                                        <li>Length: {{ record.rr_length }}</li>
+                                        {% if record.rr_type == 'A' %}
+                                            <li>IP address: {{ record['Adresse ip'] }}</li>
+                                        {% elif record.rr_type == 'NS' %}
+                                            <li>Rdata name: {{ record['rdata_NS']['rdata_name'] }}</li>
+                                        {% elif record.rr_type == 'CNAME' %}
+                                            <li>Cannonical Name: {{ record['rdata_Cannonical Name']['rdata_name'] }}</li>
+                                        {% elif record.rr_type == 'SOA' %}
+                                            <li>Primary name server: {{ record['Primary name server'] }}</li>
+                                            <li>Responsive authority's mailbox: {{ record["Responsive authority's mailbox"] }}</li>
+                                            <li>Serial number: {{ record['Serial number'] }}</li>
+                                            <li>Refresh interval: {{ record['Refresh interval'] }}</li>
+                                            <li>Retry interval: {{ record['Retry interval'] }}</li>
+                                            <li>Expire limit: {{ record['Expire limit '] }}</li>
+                                            <li>Minimum TTL: {{ record['extract Minimum TTL '] }}</li>
+                                        {% elif record.rr_type == 'PTR' %}
+                                            <li>rdata name: {{ record['rdata_PTR']['rdata_name'] }}</li>
+                                        {% elif record.rr_type == 'MX' %}
+                                            <li>Pref: {{ record['Pref'] }}</li>
+                                            <li>Ex: {{ record['Ex']['rdata_name'] }}</li>
+                                        {% elif record.rr_type == 'AAAA' %}
+                                            <li>IPv6 address: {{ record['rdata_AAAA_IPV6'] }}</li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% if data.authorities %}
+                <h2>Authorities</h2>
+                <ul>
+                {% for domain, records in data.authorities.items() %}
+                    <ul>
+                    {% for record in records %}
+                        <li>
+                            <strong>{{ record.rr_name }}</strong> ({{ record.rr_type }})
+                            <ul>
+                                <li>Class: {{ record.rr_class }}</li>
+                                <li>TTL: {{ record.rr_ttl }}</li>
+                                <li>Length: {{ record.rr_length }}</li>
+                                {% if record.rr_type == 'SOA' %}
+                                    <li>Primary name server: {{ record['Primary name server'] }}</li>
+                                    <li>Responsive authority's mailbox: {{ record["Responsive authority's mailbox"] }}</li>
+                                    <li>Serial number: {{ record['Serial number'] }}</li>
+                                    <li>Refresh interval: {{ record['Refresh interval'] }}</li>
+                                    <li>Retry interval: {{ record['Retry interval'] }}</li>
+                                    <li>Expire limit: {{ record['Expire limit '] }}</li>
+                                    <li>Minimum TTL: {{ record['extract Minimum TTL '] }}</li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        {% endif %}
+    </form>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-info">
+                {{ messages[0] }}
+            </div>
+        {% endif %}
+    {% endwith %}
+{% endblock %}
