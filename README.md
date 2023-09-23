@@ -1,6 +1,6 @@
 # DNS query application
 
-A python application using flask to send and receive DNS requests.
+A python application using flask to send and receive DNS requests without any DNS package or library.
 
 ![HOME](./static/img/DNS_APP.png "DNS APP")
 
